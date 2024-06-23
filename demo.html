@@ -58,50 +58,51 @@
         }
 
         .avatar {
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            background-color: #de9dd6;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
-        .face-animation {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: bounce 2s ease-in-out 2;
-        }
+    .face-animation {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: bounce 2s ease-in-out 2;
+    }
 
-        .textbox {
-            margin-left: 20px;
-            padding: 15px;
-            border: 2px solid #333;
-            border-radius: 10px;
-            background-color: white;
-            width: 400px;
-            font-size: 18px;
-            margin-top: -250px;
-            margin-left: -30px;
-        }
+    .textbox {
+        margin-left: 20px;
+        padding: 15px;
+        border: 2px solid #333;
+        border-radius: 10px;
+        background-color: white;
+        width: 400px;
+        font-size: 18px;
+        margin-top: -250px;
+        margin-left: -30px;
+    }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            color: #333;
-            cursor: pointer;
-        }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        color: #333;
+        cursor: pointer;
+    }
 
         .answers-container {
     position: absolute;
@@ -110,7 +111,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-row-gap: 35px; 
-    grid-column-gap: 70px; 
+    grid-column-gap: 50px; 
 }
 
 .answer-box {
@@ -230,19 +231,34 @@
     .quiz {
         background-color: #ffcc00; 
     }
-
+    
+    .top-center-textbox {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background-color: white;
+            width: 700px;
+            font-size: 18px;
+            text-align: center;
+            z-index: 10;
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
     <div class="background"></div>
     <div class="celebration-overlay" id="celebrationOverlay" style="display: none;">
-        <img src="/Users/jomosmith/Desktop/brain age/celebration.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
+        <img src="/celebration.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
     </div>
     <div class="loser-overlay" id="loserOverlay" style="display: none;">
-        <img src="/Users/jomosmith/Desktop/brain age/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
+        <img src="/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
     </div>
     <div class="avatar-container">
-        <div class="avatar" id="avatar" style="background-image: url('/Users/jomosmith/Desktop/brain age/tumblr_e17263f30cd83bff331c4a0a25e9b7da_c3d494a0_540.webp');">
+        <div class="avatar" id="avatar" style="background-image: url('oldman/idle2.png');">
             <div class="face-animation">
                 <div class="eye left"></div>
                 <div class="eye right"></div>
@@ -254,11 +270,12 @@
         </div>
         <div class="textbox" id="textbox"></div>
     </div>
+    <div class="top-center-textbox" id="topCenterTextbox"></div>
     <div class="answers-container">
-        <div class="answer-box" data-answer="1">Answer 1</div>
-        <div class="answer-box" data-answer="2">Answer 2</div>
-        <div class="answer-box" data-answer="3">Answer 3</div>
-        <div class="answer-box" data-answer="4">Answer 4</div>
+        <div class="answer-box" data-answer="1">It provided emotional support</div>
+        <div class="answer-box" data-answer="2">It covered funeral expenses</div>
+        <div class="answer-box" data-answer="3">It offered counseling services</div>
+        <div class="answer-box" data-answer="4">It sponsored the family gathering</div>
     </div>
     <div class="overlay" id="overlay">Click anywhere to start</div>
     <div class="map-container">
@@ -286,12 +303,12 @@
         </div>
     </div>
     
-    <audio id="typeSound" src="sfx/SND_TXT1.wav" preload="auto"></audio>
+    <audio id="typeSound" src="sfx/SND_TXT1.wav" preload=""></audio>
 <audio id="fullStopSound" src="sfx/mus_sfx_a_target.wav" preload="auto"></audio>
 <audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
 <audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
 <audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
-<audio id="backgroundMusic" src="sfx/bleach150.wav" preload="auto" loop></audio>
+<audio id="backgroundMusic" src="sfx/bgm1.mp3" preload="auto" loop></audio>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const colors = ["#51cacc", "#9df871", "#e0ff77", "#de9dd6", "#ff708e"];
@@ -311,7 +328,7 @@
                 background.appendChild(circle);
             }
 
-            const text = "Hello there! I am an animated talking head avatar. The text appears one character at a time. Also notice the cute sounds I make.";
+            const text = "How has Sagicor Life Insurance impacted Marlons family during his fathers passing?";
             const textbox = document.getElementById("textbox");
             const typeSound = document.getElementById("typeSound");
             const fullStopSound = document.getElementById("fullStopSound");
@@ -322,7 +339,7 @@
             const backgroundMusic = document.getElementById("backgroundMusic");
 
 
-            function typeWriter(text) {
+            function typeWriter(text, callback) {
                 let index = 0;
                 function type() {
                     if (index < text.length) {
@@ -338,15 +355,22 @@
                             setTimeout(type, 50);
                         }
                         index++;
+                    } else {
+                        if (callback && typeof callback === 'function') {
+                            callback();
+                        }
                     }
                 }
                 type();
             }
-
-       
+            // Usage
             overlay.addEventListener('click', () => {
                 overlay.style.display = 'none';
-                typeWriter(text)
+                typeWriter(text, () => {
+                    const topCenterTextbox = document.getElementById('topCenterTextbox');
+                    topCenterTextbox.textContent = text;
+                    topCenterTextbox.style.visibility = 'visible'; 
+                });
                 playBackgroundMusic(); 
             });
 
@@ -354,13 +378,64 @@
             const celebrationOverlay = document.getElementById('celebrationOverlay');
             const loserOverlay = document.getElementById('loserOverlay');
 
-            function changeAvatarToOops() {
-                avatar.style.backgroundImage = "url('/Users/jomosmith/Desktop/brain age/oopsgif.gif')";
-            }
+                function changeAvatarToOops() {
+                    const originalImage = avatar.style.backgroundImage; 
+                    const textbox = document.getElementById('textbox'); 
+                    function typeWriter(text, callback) {
+                        let i = 0;
+                        function typing() {
+                            if (i < text.length) {
+                                textbox.innerHTML += text.charAt(i);
+                                i++;
+                                setTimeout(typing, 50);
+                            } else if (callback) {
+                                setTimeout(callback, 1000); 
+                            }
+                        }
+                        textbox.innerHTML = ""; 
+                        typing();
+                    }
+
+                    avatar.style.backgroundImage = "url('oldman/no.gif')"; 
+                    typeWriter("thats not right.", () => {
+                        setTimeout(() => {
+                            avatar.style.backgroundImage = originalImage; 
+                            typeWriter("try again"); 
+                        }, 2000);
+                    });
+    }
+
 
             function changeAvatarToYes() {
-                avatar.style.backgroundImage = "url('/Users/jomosmith/Desktop/brain age/yes.gif')";
+                const originalImage = avatar.style.backgroundImage; 
+                const textbox = document.getElementById('textbox'); 
+
+                function typeWriter(text, callback) {
+                    let i = 0;
+                    function typing() {
+                        if (i < text.length) {
+                            textbox.innerHTML += text.charAt(i);
+                            i++;
+                            setTimeout(typing, 50);
+                        } else if (callback) {
+                            setTimeout(callback, 1000); 
+                        }
+                    }
+                    textbox.innerHTML = ""; 
+                    typing();
+                }
+
+                avatar.style.backgroundImage = "url('oldman/yes.jpeg')"; 
+                typeWriter("correct!", () => {
+                    setTimeout(() => {
+                        avatar.style.backgroundImage = originalImage; 
+                        typeWriter("Next Question"); 
+                    }, 2000);
+                });
             }
+
+
+
 
             function showCelebration() {
                 celebrationOverlay.style.display = 'flex';
@@ -396,14 +471,14 @@
                         answer1Sound.currentTime = 0;
                         answer1Sound.play();
                         changeAvatarToYes();
-                        showCelebration(); // Show celebration effect
-                        changeText("You did it !");
+                        //showCelebration(); 
+                        //changeText("You did it !");
                     } else {
                         answer234Sound.currentTime = 0;
                         answer234Sound.play();
                         changeAvatarToOops();
-                        showLoser(); // Show loser effect
-                        changeText("Weren't you watching the video ? ");
+                        //showLoser(); 
+                        //changeText("Weren't you watching the video ? ");
                     }
                 });
             });
@@ -432,7 +507,7 @@
 
         function playBackgroundMusic() {
             const backgroundMusic = document.getElementById("backgroundMusic");
-            backgroundMusic.volume = 0.2; // Set initial volume to 50%
+            backgroundMusic.volume = 0.2; 
             backgroundMusic.play();
         }
 
