@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Background with Talking Head</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            opacity: 0.7;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(calc(var(--move-x) * 0.6), calc(var(--move-y) * 0.8));
+            }
+            50% {
+                transform: translate(calc(var(--move-x) * 1.2), calc(var(--move-y) * 1.4));
+            }
+            75% {
+                transform: translate(calc(var(--move-x) * 0.8), calc(var(--move-y) * 0.6));
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .avatar-container {
+            position: absolute;
+            left: 20px;
+            top: calc(50% + 50px);
+            display: flex;
+            align-items: center;
+            margin-top: -150px;
+        }
+
+        .avatar {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background-color: #de9dd6;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .face-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: bounce 2s ease-in-out 2;
+        }
+
+        .textbox {
+            margin-left: 20px;
+            padding: 15px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            background-color: white;
+            width: 400px;
+            font-size: 18px;
+            margin-top: -250px;
+            margin-left: -30px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .answers-container {
+    position: absolute;
+    right: 150px;
+    top: calc(50% - 100px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 35px; /* Adjust the vertical gap between rows */
+    grid-column-gap: 70px; /* Adjust the horizontal gap between columns */
+}
+
+.answer-box {
+    width: 200px;
+    padding: 20px; /* Add padding for space inside each answer box */
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.answer-box:hover {
+    background-color: #d0d0d0;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            animation: celebration 2s ease-out forwards;
+        }
+
+        @keyframes celebration {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .loser-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            animation: loser 2s ease-out forwards;
+        }
+
+        @keyframes loser {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+    .map-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px; /* Adjust width as needed */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .map {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .map-item {
+        text-align: center;
+        flex: 1;
+    }
+
+    .map-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #ccc;
+        display: inline-block;
+        margin-bottom: 5px;
+        position: relative;
+    }
+
+    .map-label {
+        font-size: 12px;
+        color: #333;
+        margin-top: 5px;
+    }
+
+    .quiz {
+        background-color: #ffcc00; /* Highlight color for quiz circle */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="celebration-overlay" id="celebrationOverlay" style="display: none;">
+        <img src="/Users/jomosmith/Desktop/brain age/celebration.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="loser-overlay" id="loserOverlay" style="display: none;">
+        <img src="/Users/jomosmith/Desktop/brain age/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="avatar-container">
+        <div class="avatar" id="avatar" style="background-image: url('/Users/jomosmith/Desktop/brain age/tumblr_e17263f30cd83bff331c4a0a25e9b7da_c3d494a0_540.webp');">
+            <div class="face-animation">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+            </div>
+        </div>
+        <div class="textbox" id="textbox"></div>
+    </div>
+    <div class="answers-container">
+        <div class="answer-box" data-answer="1">Answer 1</div>
+        <div class="answer-box" data-answer="2">Answer 2</div>
+        <div class="answer-box" data-answer="3">Answer 3</div>
+        <div class="answer-box" data-answer="4">Answer 4</div>
+    </div>
+    <div class="overlay" id="overlay">Click anywhere to start</div>
+    <div class="map-container">
+        <div class="map">
+            <div class="map-item">
+                <div class="map-circle regular"></div>
+                <div class="map-label">Scene 1</div>
+            </div>
+            <div class="map-item">
+                <div class="map-circle regular"></div>
+                <div class="map-label">Scene 2</div>
+            </div>
+            <div class="map-item">
+                <div class="map-circle regular quiz"></div>
+                <div class="map-label">Quiz</div>
+            </div>
+            <div class="map-item">
+                <div class="map-circle regular"></div>
+                <div class="map-label">Scene 4</div>
+            </div>
+            <div class="map-item">
+                <div class="map-circle regular"></div>
+                <div class="map-label">Quiz</div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="typeSound" src="sfx/SND_TXT1.wav" preload="auto"></audio>
+<audio id="fullStopSound" src="sfx/mus_sfx_a_target.wav" preload="auto"></audio>
+<audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
+<audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
+<audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
+<audio id="backgroundMusic" src="sfx/bleach150.wav" preload="auto" loop></audio>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const colors = ["#51cacc", "#9df871", "#e0ff77", "#de9dd6", "#ff708e"];
+            const background = document.querySelector('.background');
+            const numCircles = 50;
+
+            for (let i = 0; i < 200; i++) {
+                const circle = document.createElement("div");
+                circle.classList.add("circle");
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                circle.style.backgroundColor = color;
+                circle.style.left = `${Math.random() * 100}vw`;
+                circle.style.top = `${Math.random() * 100}vh`;
+                circle.style.width = circle.style.height = `${Math.random() * 10 + 10}px`;
+                circle.style.setProperty('--move-x', `${Math.random() * 100 - 50}px`);
+                circle.style.setProperty('--move-y', `${Math.random() * 100 - 50}px`);
+                background.appendChild(circle);
+            }
+
+            const text = "Hello there! I am an animated talking head avatar. The text appears one character at a time. Also notice the cute sounds I make.";
+            const textbox = document.getElementById("textbox");
+            const typeSound = document.getElementById("typeSound");
+            const fullStopSound = document.getElementById("fullStopSound");
+            const hoverSound = document.getElementById("hoverSound");
+            const overlay = document.getElementById("overlay");
+            const answer1Sound = document.getElementById("answer1Sound");
+            const answer234Sound = document.getElementById("answer234Sound");
+            const backgroundMusic = document.getElementById("backgroundMusic");
+
+            // Function to simulate typing effect
+            function typeWriter(text) {
+                let index = 0;
+                function type() {
+                    if (index < text.length) {
+                        const char = text.charAt(index);
+                        textbox.textContent += char;
+                        if (char === '.') {
+                            fullStopSound.currentTime = 0;
+                            fullStopSound.play();
+                            setTimeout(type, 500); // Longer pause at full stop
+                        } else {
+                            typeSound.currentTime = 0;
+                            typeSound.play();
+                            setTimeout(type, 50); // Adjusted to make the text appear faster
+                        }
+                        index++;
+                    }
+                }
+                type();
+            }
+
+       
+            overlay.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                typeWriter(text)
+                playBackgroundMusic(); // Start background music when overlay is clicked
+            });
+
+            const avatar = document.getElementById('avatar');
+            const celebrationOverlay = document.getElementById('celebrationOverlay');
+            const loserOverlay = document.getElementById('loserOverlay');
+
+            function changeAvatarToOops() {
+                avatar.style.backgroundImage = "url('/Users/jomosmith/Desktop/brain age/oopsgif.gif')";
+            }
+
+            function changeAvatarToYes() {
+                avatar.style.backgroundImage = "url('/Users/jomosmith/Desktop/brain age/yes.gif')";
+            }
+
+            function showCelebration() {
+                celebrationOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    celebrationOverlay.style.display = 'none';
+                }, 4000); // Hide after 4 seconds (adjust as needed)
+            }
+
+            function showLoser() {
+                loserOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    loserOverlay.style.display = 'none';
+                }, 4000); // Hide after 4 seconds (adjust as needed)
+            }
+
+            const textboxChat = document.getElementById("textbox");
+
+            // Function to handle changing the text in .textbox
+            function changeText(text) {
+                // Clear existing text
+                textbox.textContent = '';
+                // Type new text
+                typeWriter(text);
+            }
+
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.addEventListener('mouseenter', () => {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+                });
+                box.addEventListener('click', () => {
+                    if (box.dataset.answer === "1") {
+                        answer1Sound.currentTime = 0;
+                        answer1Sound.play();
+                        changeAvatarToYes();
+                        showCelebration(); // Show celebration effect
+                        changeText("You did it !");
+                    } else {
+                        answer234Sound.currentTime = 0;
+                        answer234Sound.play();
+                        changeAvatarToOops();
+                        showLoser(); // Show loser effect
+                        changeText("Weren't you watching the video ? ");
+                    }
+                });
+            });
+        });
+
+        // Functions to set volume for each sound
+        function setTypeSoundVolume(volume) {
+            document.getElementById("typeSound").volume = volume;
+        }
+
+        function setFullStopSoundVolume(volume) {
+            document.getElementById("fullStopSound").volume = volume;
+        }
+
+        function setHoverSoundVolume(volume) {
+            document.getElementById("hoverSound").volume = volume;
+        }
+
+        function setAnswer1SoundVolume(volume) {
+            document.getElementById("answer1Sound").volume = volume;
+        }
+
+        function setAnswer234SoundVolume(volume) {
+            document.getElementById("answer234Sound").volume = volume;
+        }
+
+        function playBackgroundMusic() {
+            const backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.volume = 0.2; // Set initial volume to 50%
+            backgroundMusic.play();
+        }
+
+        function pauseBackgroundMusic() {
+            const backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.pause();
+        }
+
+        function setBackgroundMusicVolume(volume) {
+            const backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.volume = volume;
+        }
+
+        // Example usage:
+        setTypeSoundVolume(0.2); // Set type sound volume to 50%
+        setFullStopSoundVolume(0.3); // Set full stop sound volume to 70%
+        setHoverSoundVolume(0.2); // Set hover sound volume to 30%
+        setAnswer1SoundVolume(0.7); // Set answer 1 sound volume to 90%
+        setAnswer234SoundVolume(0.4); // Set answer 2, 3, 4 sound volume to 40%
+
+    </script>
+</body>
+</html>
+
