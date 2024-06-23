@@ -109,13 +109,13 @@
     top: calc(50% - 100px);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-row-gap: 35px; /* Adjust the vertical gap between rows */
-    grid-column-gap: 70px; /* Adjust the horizontal gap between columns */
+    grid-row-gap: 35px; 
+    grid-column-gap: 70px; 
 }
 
 .answer-box {
     width: 200px;
-    padding: 20px; /* Add padding for space inside each answer box */
+    padding: 20px; 
     border: 1px solid #333;
     border-radius: 10px;
     background-color: #f0f0f0;
@@ -193,7 +193,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 600px; /* Adjust width as needed */
+    width: 600px; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -228,7 +228,7 @@
     }
 
     .quiz {
-        background-color: #ffcc00; /* Highlight color for quiz circle */
+        background-color: #ffcc00; 
     }
 
     </style>
@@ -321,7 +321,7 @@
             const answer234Sound = document.getElementById("answer234Sound");
             const backgroundMusic = document.getElementById("backgroundMusic");
 
-            // Function to simulate typing effect
+
             function typeWriter(text) {
                 let index = 0;
                 function type() {
@@ -331,11 +331,11 @@
                         if (char === '.') {
                             fullStopSound.currentTime = 0;
                             fullStopSound.play();
-                            setTimeout(type, 500); // Longer pause at full stop
+                            setTimeout(type, 500); 
                         } else {
                             typeSound.currentTime = 0;
                             typeSound.play();
-                            setTimeout(type, 50); // Adjusted to make the text appear faster
+                            setTimeout(type, 50);
                         }
                         index++;
                     }
@@ -347,7 +347,7 @@
             overlay.addEventListener('click', () => {
                 overlay.style.display = 'none';
                 typeWriter(text)
-                playBackgroundMusic(); // Start background music when overlay is clicked
+                playBackgroundMusic(); 
             });
 
             const avatar = document.getElementById('avatar');
@@ -366,23 +366,23 @@
                 celebrationOverlay.style.display = 'flex';
                 setTimeout(() => {
                     celebrationOverlay.style.display = 'none';
-                }, 4000); // Hide after 4 seconds (adjust as needed)
+                }, 4000); 
             }
 
             function showLoser() {
                 loserOverlay.style.display = 'flex';
                 setTimeout(() => {
                     loserOverlay.style.display = 'none';
-                }, 4000); // Hide after 4 seconds (adjust as needed)
+                }, 4000); 
             }
 
             const textboxChat = document.getElementById("textbox");
 
-            // Function to handle changing the text in .textbox
+
             function changeText(text) {
-                // Clear existing text
+
                 textbox.textContent = '';
-                // Type new text
+
                 typeWriter(text);
             }
 
@@ -446,12 +446,12 @@
             backgroundMusic.volume = volume;
         }
 
-        // Example usage:
-        setTypeSoundVolume(0.2); // Set type sound volume to 50%
-        setFullStopSoundVolume(0.3); // Set full stop sound volume to 70%
-        setHoverSoundVolume(0.2); // Set hover sound volume to 30%
-        setAnswer1SoundVolume(0.7); // Set answer 1 sound volume to 90%
-        setAnswer234SoundVolume(0.4); // Set answer 2, 3, 4 sound volume to 40%
+
+        setTypeSoundVolume(0.2); 
+        setFullStopSoundVolume(0.3); 
+        setHoverSoundVolume(0.2); 
+        setAnswer1SoundVolume(0.7); 
+        setAnswer234SoundVolume(0.4); 
 
     </script>
 </body>
