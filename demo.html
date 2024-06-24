@@ -4,60 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animated Background with Talking Head</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: white;
-            font-family: Arial, sans-serif;
-        }
 
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: white;
+        font-family: Arial, sans-serif;
+    }
 
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            opacity: 0.7;
-            animation: move 2s linear infinite;
-        }
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 
-        @keyframes move {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(calc(var(--move-x) * 0.6), calc(var(--move-y) * 0.8));
-            }
-            50% {
-                transform: translate(calc(var(--move-x) * 1.2), calc(var(--move-y) * 1.4));
-            }
-            75% {
-                transform: translate(calc(var(--move-x) * 0.8), calc(var(--move-y) * 0.6));
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        opacity: 0.7;
+        animation: move 2s linear infinite;
+    }
 
-        .avatar-container {
-            position: absolute;
-            left: 20px;
-            top: calc(50% + 50px);
-            display: flex;
-            align-items: center;
-            margin-top: -150px;
+    @keyframes move {
+        0% {
+            transform: translate(0, 0);
         }
+        25% {
+            transform: translate(calc(var(--move-x) * 0.6), calc(var(--move-y) * 0.8));
+        }
+        50% {
+            transform: translate(calc(var(--move-x) * 1.2), calc(var(--move-y) * 1.4));
+        }
+        75% {
+            transform: translate(calc(var(--move-x) * 0.8), calc(var(--move-y) * 0.6));
+        }
+        100% {
+            transform: translate(0, 0);
+        }
+    }
 
-        .avatar {
+    .avatar-container {
+        position: absolute;
+        left: 20px;
+        top: calc(50% + 50px);
+        display: flex;
+        align-items: center;
+        margin-top: -150px;
+    }
+
+    
+    .avatar {
+            
     width: 240px;
     height: 240px;
     border-radius: 50%;
@@ -67,28 +71,45 @@
     overflow: hidden;
     background-size: contain;
     background-repeat: no-repeat;
-}
-
-    .face-animation {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        animation: bounce 2s ease-in-out 2;
     }
+
+
 
     .textbox {
-        margin-left: 20px;
-        padding: 15px;
-        border: 2px solid #333;
-        border-radius: 10px;
-        background-color: white;
-        width: 400px;
-        font-size: 18px;
-        margin-top: -250px;
-        margin-left: -30px;
+    margin-left: 20px;
+    padding: 15px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: white;
+    width: 250px;
+    height: 150px;
+    font-size: 18px;
+    margin-top: -250px;
+    margin-left: -60px;
+    z-index: 2;
+    position: relative; 
     }
 
+    .textbox::after {
+        content: '';
+        position: absolute;
+        bottom: -40px; 
+        left: 18px; 
+        border-width: 40px 40px 0 0; 
+        border-style: solid;
+        border-color: #000000 transparent transparent transparent; 
+    }
+
+    .textbox::before {
+        content: '';
+        position: absolute;
+        bottom: -38px; 
+        left: 19px; 
+        border-width: 38px 38px 0 0; 
+        border-style: solid;
+        border-color: white transparent transparent transparent; 
+        z-index: 2;
+    }
     .overlay {
         position: fixed;
         top: 0;
@@ -104,90 +125,105 @@
         cursor: pointer;
     }
 
-        .answers-container {
-    position: absolute;
-    right: 150px;
-    top: calc(50% - 100px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-row-gap: 35px; 
-    grid-column-gap: 50px; 
-}
+    .answers-container {
+        position: absolute;
+        right: 150px;
+        top: calc(50% - 100px);
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 35px; 
+        width: fit-content; 
+        margin-top: -90px;
 
-.answer-box {
-    width: 200px;
-    padding: 20px; 
-    border: 1px solid #333;
-    border-radius: 10px;
-    background-color: #f0f0f0;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    }
 
-.answer-box:hover {
-    background-color: #d0d0d0;
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+    .answer-box {
+        width: 400px;
+        padding: 20px; 
+        border: 1px solid #333;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto; 
+        text-align: left;
+    }
 
+    .answer-box:hover {
+        background-color: #d0d0d0;
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 
-        .celebration-overlay {
+    .logo {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            animation: celebration 2s ease-out forwards;
-        }
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            }
 
-        @keyframes celebration {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+    .logo img {
+        width: 100px; 
+    }
 
-        .loser-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            animation: loser 2s ease-out forwards;
-        }
 
-        @keyframes loser {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+    .celebration-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        animation: celebration 2s ease-out forwards;
+    }
+
+    @keyframes celebration {
+        0% {
+            transform: scale(0);
+            opacity: 0;
         }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .loser-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        animation: loser 2s ease-out forwards;
+    }
+
+    @keyframes loser {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 
     .map-container {
     position: fixed;
@@ -231,31 +267,37 @@
     .quiz {
         background-color: #ffcc00; 
     }
-    
+        
     .top-center-textbox {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px;
-            border: 1px solid #333;
-            border-radius: 10px;
-            background-color: white;
-            width: 700px;
-            font-size: 18px;
-            text-align: center;
-            z-index: 10;
-            visibility: hidden;
-        }
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: white;
+    width: 700px;
+    font-size: 20px; /* Slightly larger for better readability with fun fonts */
+    text-align: center;
+    z-index: 10;
+    visibility: hidden;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; /* Updated font family */
+    height: 40px;
+    font-weight: 700; /* Increased weight for boldness */
+}
     </style>
 </head>
 <body>
+    
     <div class="background"></div>
+
+
     <div class="celebration-overlay" id="celebrationOverlay" style="display: none;">
-        <img src="/celebration.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
+        <img src="overlay/correct2.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
     </div>
     <div class="loser-overlay" id="loserOverlay" style="display: none;">
-        <img src="/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
+        <img src="overlay/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
     </div>
     <div class="avatar-container">
         <div class="avatar" id="avatar" style="background-image: url('oldman/idle2.png');">
@@ -270,13 +312,16 @@
         </div>
         <div class="textbox" id="textbox"></div>
     </div>
+    
     <div class="top-center-textbox" id="topCenterTextbox"></div>
+
     <div class="answers-container">
-        <div class="answer-box" data-answer="1">It provided emotional support</div>
-        <div class="answer-box" data-answer="2">It covered funeral expenses</div>
-        <div class="answer-box" data-answer="3">It offered counseling services</div>
-        <div class="answer-box" data-answer="4">It sponsored the family gathering</div>
+        <div class="answer-box" data-answer="1">(A) It provided emotional support</div>
+        <div class="answer-box" data-answer="2">(B) It covered funeral expenses</div>
+        <div class="answer-box" data-answer="3">(C) It offered counseling services</div>
+        <div class="answer-box" data-answer="4">(D) It sponsored the family gathering</div>
     </div>
+
     <div class="overlay" id="overlay">Click anywhere to start</div>
     <div class="map-container">
         <div class="map">
@@ -308,7 +353,7 @@
 <audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
 <audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
 <audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
-<audio id="backgroundMusic" src="sfx/bgm1.mp3" preload="auto" loop></audio>
+<audio id="backgroundMusic" src="music/bgm1.mp3" preload="auto" loop></audio>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const colors = ["#51cacc", "#9df871", "#e0ff77", "#de9dd6", "#ff708e"];
@@ -441,7 +486,7 @@
                 celebrationOverlay.style.display = 'flex';
                 setTimeout(() => {
                     celebrationOverlay.style.display = 'none';
-                }, 4000); 
+                }, 2000); 
             }
 
             function showLoser() {
@@ -471,7 +516,7 @@
                         answer1Sound.currentTime = 0;
                         answer1Sound.play();
                         changeAvatarToYes();
-                        //showCelebration(); 
+                        showCelebration(); 
                         //changeText("You did it !");
                     } else {
                         answer234Sound.currentTime = 0;
@@ -507,7 +552,7 @@
 
         function playBackgroundMusic() {
             const backgroundMusic = document.getElementById("backgroundMusic");
-            backgroundMusic.volume = 0.2; 
+            backgroundMusic.volume = 0.1; 
             backgroundMusic.play();
         }
 
