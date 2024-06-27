@@ -59,57 +59,62 @@
         margin-top: -150px;
     }
 
-    
-    .avatar {
-            
-    width: 240px;
-    height: 240px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    background-size: contain;
-    background-repeat: no-repeat;
-    }
+        
+        .avatar {
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+        background-size: contain;
+        margin-left: 140px;
+        background-repeat: no-repeat;
+
+        }
 
 
 
     .textbox {
-    margin-left: 20px;
-    padding: 15px;
-    border: 2px solid #333;
-    border-radius: 10px;
-    background-color: white;
-    width: 250px;
-    height: 150px;
-    font-size: 18px;
-    margin-top: -250px;
-    margin-left: -60px;
-    z-index: 2;
-    position: relative; 
-    }
 
-    .textbox::after {
-        content: '';
-        position: absolute;
-        bottom: -40px; 
-        left: 18px; 
-        border-width: 40px 40px 0 0; 
-        border-style: solid;
-        border-color: #000000 transparent transparent transparent; 
-    }
+            padding: 15px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background: white;
+            width: 250px;
+            height: 150px;
+            font-size: 18px;
+            margin-top: -250px;
+            margin-left: -50px; 
+            z-index: 1;
+            position: relative;
+            color: black; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-    .textbox::before {
-        content: '';
-        position: absolute;
-        bottom: -38px; 
-        left: 19px; 
-        border-width: 38px 38px 0 0; 
-        border-style: solid;
-        border-color: white transparent transparent transparent; 
-        z-index: 2;
-    }
+        .textbox::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; 
+            left: 18px; 
+            border-width: 40px 40px 0 0; 
+            border-style: solid;
+            border-color: black transparent transparent; 
+        }
+
+        .textbox::before {
+            content: '';
+            position: absolute;
+            bottom: -38px; 
+            left: 19px; 
+            border-width: 38px 38px 0 0; 
+            border-style: solid;
+            border-color: white transparent transparent; 
+            z-index: 2;
+        }
+
+        
     .overlay {
         position: fixed;
         top: 0;
@@ -137,25 +142,53 @@
 
     }
 
-    .answer-box {
-        width: 400px;
-        padding: 20px; 
-        border: 1px solid #333;
-        border-radius: 10px;
-        background-color: #f0f0f0;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 0 auto; 
-        text-align: left;
-    }
+    @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
-    .answer-box:hover {
-        background-color: #d0d0d0;
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+        .answer-box {
+            width: 400px;
+            padding: 20px;
+            border: 2px solid #00A9E0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #00A9E0 0%, #66d3f0 100%);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            text-align: left;
+            animation: pulse 2s infinite;
+            color: white;
+            font-weight: 600;
+
+        }
+
+        .answer-box:hover {
+            transform: scale(1.2); 
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); 
+            background: linear-gradient(135deg, #66d3f0 0%, #00A9E0 100%); 
+        }
 
     .logo {
             position: fixed;
@@ -225,6 +258,8 @@
         }
     }
 
+    
+
     .map-container {
     position: fixed;
     bottom: 20px;
@@ -269,23 +304,26 @@
     }
         
     .top-center-textbox {
-    position: fixed;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    background-color: white;
-    width: 700px;
-    font-size: 20px; /* Slightly larger for better readability with fun fonts */
-    text-align: center;
-    z-index: 10;
-    visibility: hidden;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; /* Updated font family */
-    height: 40px;
-    font-weight: 700; /* Increased weight for boldness */
-}
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border: 2px solid #84BD00;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #84BD00 0%, #a1e44d 100%);
+            width: 700px;
+            font-size: 20px; 
+            text-align: center;
+            z-index: 10;
+            visibility: hidden;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+            height: 40px;
+            font-weight: 700; 
+            color: black; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            
+        }
     </style>
 </head>
 <body>
@@ -480,8 +518,6 @@
             }
 
 
-
-
             function showCelebration() {
                 celebrationOverlay.style.display = 'flex';
                 setTimeout(() => {
@@ -529,7 +565,6 @@
             });
         });
 
-        // Functions to set volume for each sound
         function setTypeSoundVolume(volume) {
             document.getElementById("typeSound").volume = volume;
         }
