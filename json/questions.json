@@ -1,0 +1,20 @@
+[
+    {
+        "question": "What support did the organization provide?",
+        "answers": [
+            { "text": "It provided emotional support.", "correct": true },
+            { "text": "It covered funeral expenses.", "correct": false },
+            { "text": "It offered counseling services.", "correct": false },
+            { "text": "It sponsored the family gathering.", "correct": false }
+        ]
+    },
+    {
+        "question": "What is the capital of France?",
+        "answers": [
+            { "text": "Paris", "correct": true },
+            { "text": "Berlin", "correct": false },
+            { "text": "Madrid", "correct": false },
+            { "text": "Lisbon", "correct": false }
+        ]
+    }
+]

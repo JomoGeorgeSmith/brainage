@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animated Background with Talking Head</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
     <style>
 
     body, html {
@@ -32,23 +33,6 @@
         animation: move 2s linear infinite;
     }
 
-    @keyframes move {
-        0% {
-            transform: translate(0, 0);
-        }
-        25% {
-            transform: translate(calc(var(--move-x) * 0.6), calc(var(--move-y) * 0.8));
-        }
-        50% {
-            transform: translate(calc(var(--move-x) * 1.2), calc(var(--move-y) * 1.4));
-        }
-        75% {
-            transform: translate(calc(var(--move-x) * 0.8), calc(var(--move-y) * 0.6));
-        }
-        100% {
-            transform: translate(0, 0);
-        }
-    }
 
     .avatar-container {
         position: absolute;
@@ -61,8 +45,8 @@
 
         
         .avatar {
-        width: 240px;
-        height: 240px;
+        width: 310px;
+        height: 310px;
         border-radius: 50%;
         background-color: #ffffff;
         background-position: center;
@@ -76,43 +60,43 @@
 
 
 
-    .textbox {
-
-            padding: 15px;
-            border: 2px solid black;
-            border-radius: 10px;
-            background: white;
+        .textbox {
             width: 250px;
             height: 150px;
             font-size: 18px;
             margin-top: -250px;
-            margin-left: -50px; 
+            margin-left: -30px;
             z-index: 1;
             position: relative;
-            color: black; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border: 2px solid #00A9E0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #00A9E0 0%, #66d3f0 100%);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+            color: white;
+            font-weight: 600;
+
         }
 
-        .textbox::after {
-            content: '';
-            position: absolute;
-            bottom: -40px; 
-            left: 18px; 
-            border-width: 40px 40px 0 0; 
-            border-style: solid;
-            border-color: black transparent transparent; 
-        }
 
-        .textbox::before {
-            content: '';
-            position: absolute;
-            bottom: -38px; 
-            left: 19px; 
-            border-width: 38px 38px 0 0; 
-            border-style: solid;
-            border-color: white transparent transparent; 
-            z-index: 2;
-        }
+
+
+
+/*            .textbox::before {
+                content: '';
+                position: absolute;
+                bottom: -38px;
+                left: 19px;
+                border-width: 38px 38px 0 0;
+                border-style: solid;
+                border-color: #00A9E0 transparent transparent;
+                z-index: 2;
+                background: linear-gradient(135deg, #00A9E0 0%, #66d3f0 100%);
+            }*/
 
         
     .overlay {
@@ -132,39 +116,15 @@
 
     .answers-container {
         position: absolute;
-        right: 150px;
+        right: 260px;
         top: calc(50% - 100px);
         display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 35px; 
         width: fit-content; 
         margin-top: -90px;
-
     }
 
-    @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-    
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
 
         .answer-box {
             width: 400px;
@@ -216,19 +176,6 @@
         animation: celebration 2s ease-out forwards;
     }
 
-    @keyframes celebration {
-        0% {
-            transform: scale(0);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1.2);
-        }
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
 
     .loser-overlay {
         position: fixed;
@@ -243,21 +190,6 @@
         z-index: 999;
         animation: loser 2s ease-out forwards;
     }
-
-    @keyframes loser {
-        0% {
-            transform: scale(0);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1.2);
-        }
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
     
 
     .map-container {
@@ -299,7 +231,7 @@
         margin-top: 5px;
     }
 
-    .quiz {
+    .current-node {
         background-color: #ffcc00; 
     }
         
@@ -317,101 +249,422 @@
             text-align: center;
             z-index: 10;
             visibility: hidden;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             height: 40px;
             font-weight: 700; 
             color: black; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             
         }
-    </style>
-</head>
-<body>
-    
-    <div class="background"></div>
+
+        .video-container {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            z-index: 2;
+
+        }
+
+        .background-video {
+            border: 4px solid #ffffff;
+            box-sizing: border-box;
+            width: 100%; 
+            max-width: 900px; 
+            height: auto; 
+            object-fit: cover; 
+        }
+
+        .logo-container {
+            position: fixed; 
+            top: 0;
+            left: 20px;
+            padding: 10px; 
+            z-index: 1000; 
+        }
+
+        .site-logo {
+            height: 80px; 
+            width: auto;
+        }
+
+        .square, .triangle, .circle {
+            position: absolute;
+            animation: moveShape 5s infinite alternate;
+        }
 
 
-    <div class="celebration-overlay" id="celebrationOverlay" style="display: none;">
-        <img src="overlay/correct2.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
-    </div>
-    <div class="loser-overlay" id="loserOverlay" style="display: none;">
-        <img src="overlay/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
-    </div>
-    <div class="avatar-container">
-        <div class="avatar" id="avatar" style="background-image: url('oldman/idle2.png');">
-            <div class="face-animation">
-                <div class="eye left"></div>
-                <div class="eye right"></div>
-                <div class="nose"></div>
-                <div class="mouth"></div>
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-            </div>
-        </div>
-        <div class="textbox" id="textbox"></div>
-    </div>
-    
-    <div class="top-center-textbox" id="topCenterTextbox"></div>
+    @keyframes float {
+        0% {
+            transform: translateY(0);
+        }
 
-    <div class="answers-container">
-        <div class="answer-box" data-answer="1">(A) It provided emotional support</div>
-        <div class="answer-box" data-answer="2">(B) It covered funeral expenses</div>
-        <div class="answer-box" data-answer="3">(C) It offered counseling services</div>
-        <div class="answer-box" data-answer="4">(D) It sponsored the family gathering</div>
-    </div>
+        50% {
+            transform: translateY(-10px);
+        }
 
-    <div class="overlay" id="overlay">Click anywhere to start</div>
-    <div class="map-container">
-        <div class="map">
-            <div class="map-item">
-                <div class="map-circle regular"></div>
-                <div class="map-label">Scene 1</div>
-            </div>
-            <div class="map-item">
-                <div class="map-circle regular"></div>
-                <div class="map-label">Scene 2</div>
-            </div>
-            <div class="map-item">
-                <div class="map-circle regular quiz"></div>
-                <div class="map-label">Quiz</div>
-            </div>
-            <div class="map-item">
-                <div class="map-circle regular"></div>
-                <div class="map-label">Scene 4</div>
-            </div>
-            <div class="map-item">
-                <div class="map-circle regular"></div>
-                <div class="map-label">Quiz</div>
-            </div>
-        </div>
-    </div>
-    
-    <audio id="typeSound" src="sfx/SND_TXT1.wav" preload=""></audio>
-<audio id="fullStopSound" src="sfx/mus_sfx_a_target.wav" preload="auto"></audio>
-<audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
-<audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
-<audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
-<audio id="backgroundMusic" src="music/bgm1.mp3" preload="auto" loop></audio>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const colors = ["#51cacc", "#9df871", "#e0ff77", "#de9dd6", "#ff708e"];
-            const background = document.querySelector('.background');
-            const numCircles = 50;
+        100% {
+            transform: translateY(0);
+        }
+    }
 
-            for (let i = 0; i < 200; i++) {
-                const circle = document.createElement("div");
-                circle.classList.add("circle");
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                circle.style.backgroundColor = color;
-                circle.style.left = `${Math.random() * 100}vw`;
-                circle.style.top = `${Math.random() * 100}vh`;
-                circle.style.width = circle.style.height = `${Math.random() * 10 + 10}px`;
-                circle.style.setProperty('--move-x', `${Math.random() * 100 - 50}px`);
-                circle.style.setProperty('--move-y', `${Math.random() * 100 - 50}px`);
-                background.appendChild(circle);
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes loser {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes celebration {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes moveShape {
+        0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        25% {
+            transform: translate(calc(var(--move-x) / 2), calc(var(--move-y) / 2)) rotate(20deg);
+        }
+
+        50% {
+            transform: translate(var(--move-x), var(--move-y)) rotate(0deg);
+        }
+
+        75% {
+            transform: translate(calc(var(--move-x) / 2), calc(var(--move-y) / 2)) rotate(-20deg);
+        }
+    }
+        @keyframes pulse2 {
+            0% {
+                transform: rotate(105deg) scale(1);
             }
 
-            const text = "How has Sagicor Life Insurance impacted Marlons family during his fathers passing?";
+            50% {
+                transform: rotate(105deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(105deg) scale(1);
+            }
+        }
+
+
+
+    </style>
+
+
+    <style>
+
+        .left-point {
+            width: 0;
+            height: 0;
+            border-left: 2vh solid transparent;
+            border-right: 2vh solid transparent;
+            border-top: 10vh solid #00A9E0;
+            position: absolute;
+            top: 45%;
+            left: -10%;
+            transform: rotate(60deg);
+            margin-left: 450px;
+            margin-top: -100px;
+           /* animation: pulse2 2s infinite;*/
+        }
+
+    </style>
+    
+</head> 
+
+<body>
+
+    <div class="appContainer">
+
+        <div class="background"></div>
+
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="Logo" class="site-logo">
+        </div>
+
+        <div class="video-container" id="videoContainer">
+
+            <div class="backgroundVid"></div>
+
+            <video class="background-video" autoplay controls>
+                <source src="video/testVid2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!--<div class="playback-speed-control">
+            <label for="playbackSpeed">Playback Speed:</label>
+            <select id="playbackSpeed">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
+        </div>-->
+
+        </div>
+
+        <div class="quizDiv" style="display: none;" id="quizDiv">
+
+            <!--<div class="background"></div>-->
+
+            <div class="celebration-overlay" id="celebrationOverlay" style="display: none;">
+                <img src="overlay/correct2.gif" alt="Celebration Animation" style="max-width: 100%; max-height: 100%;">
+            </div>
+
+            <div class="loser-overlay" id="loserOverlay" style="display: none;">
+                <img src="overlay/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
+            </div>
+
+            <div class="avatar-container">
+                <div class="avatar" id="avatar" style="background-image: url('oldman/idle2.png');">
+
+                </div>
+                <div class="textbox question-container" id="textbox">
+
+                </div>
+                <div class="left-point"></div>
+
+            </div>
+
+            <div class="top-center-textbox" id="topCenterTextbox"></div>
+
+            <div class="answers-container">
+                <!--<div class="answer-box" data-answer="1"> It provided emotional support.</div>
+                <div class="answer-box" data-answer="2"> It covered funeral expenses.</div>
+                <div class="answer-box" data-answer="3"> It offered counseling services.</div>
+                <div class="answer-box" data-answer="4"> It sponsored the family gathering.</div>-->
+            </div>
+
+        </div>
+
+        <div class="overlay" id="overlay">Click anywhere to start</div>
+
+        <div class="map-container">
+            <div class="map">
+                <div class="map-item">
+                    <div class="map-circle regular"></div>
+                    <div class="map-label">Scene 1</div>
+                </div>
+                <div class="map-item">
+                    <div class="map-circle regular"></div>
+                    <div class="map-label">Quiz</div>
+                </div>
+                <div class="map-item">
+                    <div class="map-circle regular"></div>
+                    <div class="map-label">Scene 2</div>
+                </div>
+                <div class="map-item">
+                    <div class="map-circle regular"></div>
+                    <div class="map-label">Quiz</div>
+                </div>
+                <div class="map-item">
+                    <div class="map-circle regular"></div>
+                    <div class="map-label">Scene 3</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <audio id="typeSound" src="sfx/SND_TXT1.wav" preload="auto"></audio>
+    <audio id="fullStopSound" src="sfx/mus_sfx_a_target.wav" preload="auto"></audio>
+    <audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
+    <audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
+    <audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
+    <audio id="backgroundMusic" src="music/bgm1.mp3" preload="auto" loop></audio>
+
+    <script>
+
+        function typeWriter(text, callback) {
+            let index = 0;
+            function type() {
+                if (index < text.length) {
+                    const char = text.charAt(index);
+                    textbox.textContent += char;
+                    if (char === '.') {
+                        fullStopSound.currentTime = 0;
+                        fullStopSound.play();
+                        setTimeout(type, 500);
+                    } else {
+                        typeSound.currentTime = 0;
+                        typeSound.play();
+                        setTimeout(type, 50);
+                    }
+                    index++;
+                } else {
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+                }
+            }
+            type();
+        }
+
+        function changeAvatarToYes() {
+            const originalImage = avatar.style.backgroundImage;
+            const textbox = document.getElementById('textbox');
+
+            function typeWriter(text, callback) {
+                let i = 0;
+                function typing() {
+                    if (i < text.length) {
+                        textbox.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typing, 50);
+                    } else if (callback) {
+                        setTimeout(callback, 1000);
+                    }
+                }
+                textbox.innerHTML = "";
+                typing();
+            }
+
+            avatar.style.backgroundImage = "url('oldman/yes.jpeg')";
+            typeWriter("correct!", () => {
+                setTimeout(() => {
+                    avatar.style.backgroundImage = originalImage;
+                    typeWriter("Next Question");
+                }, 2000);
+            });
+        }
+
+        function changeAvatarToOops() {
+            const originalImage = avatar.style.backgroundImage;
+            const textbox = document.getElementById('textbox');
+            function typeWriter(text, callback) {
+                let i = 0;
+                function typing() {
+                    if (i < text.length) {
+                        textbox.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typing, 50);
+                    } else if (callback) {
+                        setTimeout(callback, 1000);
+                    }
+                }
+                textbox.innerHTML = "";
+                typing();
+            }
+
+            avatar.style.backgroundImage = "url('oldman/no.gif')";
+            typeWriter("thats not right.", () => {
+                setTimeout(() => {
+                    avatar.style.backgroundImage = originalImage;
+                    typeWriter("try again");
+                }, 2000);
+            });
+        }
+
+        function showCelebration() {
+            celebrationOverlay.style.display = 'flex';
+            setTimeout(() => {
+                celebrationOverlay.style.display = 'none';
+            }, 2000);
+        }
+
+        function playSound(sound) {
+            return new Promise((resolve) => {
+                sound.currentTime = 0;
+                sound.play();
+                sound.onended = resolve;
+            });
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const colors = ["#51cacc", "#9df871", "#e0ff77", "#de9dd6", "#ff708e", "#84BD00", "#00A9E0", "#66d3f0", "#a1e44d", "#b8e986"];
+            const background = document.querySelector('.background');
+            background.style.backgroundColor = "#f0f0f0"; 
+
+            for (let i = 0; i < 100; i++) {
+                const shape = document.createElement("div");
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                shape.style.borderColor = color;
+                shape.style.left = `${Math.random() * 100}vw`;
+                shape.style.top = `${Math.random() * 100}vh`;
+                shape.style.setProperty('--move-x', `${Math.random() * 100 - 50}px`);
+                shape.style.setProperty('--move-y', `${Math.random() * 100 - 50}px`);
+
+                // Determine shape type based on the iteration
+                if (i % 3 === 0) {
+                    // Square
+                    shape.classList.add("square");
+                    shape.style.borderWidth = "2px";
+                    shape.style.borderStyle = "solid";
+                    shape.style.backgroundColor = "transparent";
+                    shape.style.width = shape.style.height = "20px"; // Fixed size for squares
+                }
+                //else if (i % 3 === 1) {
+                //    // Triangle
+                //    shape.classList.add("triangle");
+                //    shape.style.width = "0";
+                //    shape.style.height = "0";
+                //    shape.style.borderLeft = "10px solid transparent"; // Fixed size for triangles
+                //    shape.style.borderRight = "10px solid transparent"; // Fixed size for triangles
+                //    shape.style.borderBottom = "20px solid " + color; // Colored border for triangles
+                //}
+                else {
+                    // Circle
+                    shape.classList.add("circle");
+                    shape.style.borderWidth = "2px";
+                    shape.style.borderStyle = "solid";
+                    // White fill for circles
+                    shape.style.width = shape.style.height = "20px"; // Fixed size for circles
+                    shape.style.borderRadius = "50%"; // Make it round
+                }
+
+                const animationDuration = `${Math.random() * 5 + 5}s`; // Between 5 and 10 seconds
+                shape.style.animation = `moveShape ${animationDuration} infinite linear`;
+
+
+                background.appendChild(shape);
+            }
+
             const textbox = document.getElementById("textbox");
             const typeSound = document.getElementById("typeSound");
             const fullStopSound = document.getElementById("fullStopSound");
@@ -422,118 +675,39 @@
             const backgroundMusic = document.getElementById("backgroundMusic");
 
 
-            function typeWriter(text, callback) {
-                let index = 0;
-                function type() {
-                    if (index < text.length) {
-                        const char = text.charAt(index);
-                        textbox.textContent += char;
-                        if (char === '.') {
-                            fullStopSound.currentTime = 0;
-                            fullStopSound.play();
-                            setTimeout(type, 500); 
-                        } else {
-                            typeSound.currentTime = 0;
-                            typeSound.play();
-                            setTimeout(type, 50);
-                        }
-                        index++;
-                    } else {
-                        if (callback && typeof callback === 'function') {
-                            callback();
-                        }
-                    }
-                }
-                type();
-            }
-            // Usage
+
+            // Start Quiz
             overlay.addEventListener('click', () => {
                 overlay.style.display = 'none';
-                typeWriter(text, () => {
-                    const topCenterTextbox = document.getElementById('topCenterTextbox');
-                    topCenterTextbox.textContent = text;
-                    topCenterTextbox.style.visibility = 'visible'; 
-                });
-                playBackgroundMusic(); 
+
+
+                //typeWriter(text, () => {
+                //    const topCenterTextbox = document.getElementById('topCenterTextbox');
+                //    topCenterTextbox.textContent = text;
+                //    topCenterTextbox.style.visibility = 'visible';
+                //});
+                //playBackgroundMusic();
             });
 
             const avatar = document.getElementById('avatar');
             const celebrationOverlay = document.getElementById('celebrationOverlay');
             const loserOverlay = document.getElementById('loserOverlay');
 
-                function changeAvatarToOops() {
-                    const originalImage = avatar.style.backgroundImage; 
-                    const textbox = document.getElementById('textbox'); 
-                    function typeWriter(text, callback) {
-                        let i = 0;
-                        function typing() {
-                            if (i < text.length) {
-                                textbox.innerHTML += text.charAt(i);
-                                i++;
-                                setTimeout(typing, 50);
-                            } else if (callback) {
-                                setTimeout(callback, 1000); 
-                            }
-                        }
-                        textbox.innerHTML = ""; 
-                        typing();
-                    }
-
-                    avatar.style.backgroundImage = "url('oldman/no.gif')"; 
-                    typeWriter("thats not right.", () => {
-                        setTimeout(() => {
-                            avatar.style.backgroundImage = originalImage; 
-                            typeWriter("try again"); 
-                        }, 2000);
-                    });
-    }
-
-
-            function changeAvatarToYes() {
-                const originalImage = avatar.style.backgroundImage; 
-                const textbox = document.getElementById('textbox'); 
-
-                function typeWriter(text, callback) {
-                    let i = 0;
-                    function typing() {
-                        if (i < text.length) {
-                            textbox.innerHTML += text.charAt(i);
-                            i++;
-                            setTimeout(typing, 50);
-                        } else if (callback) {
-                            setTimeout(callback, 1000); 
-                        }
-                    }
-                    textbox.innerHTML = ""; 
-                    typing();
-                }
-
-                avatar.style.backgroundImage = "url('oldman/yes.jpeg')"; 
-                typeWriter("correct!", () => {
-                    setTimeout(() => {
-                        avatar.style.backgroundImage = originalImage; 
-                        typeWriter("Next Question"); 
-                    }, 2000);
-                });
-            }
-
-
-            function showCelebration() {
-                celebrationOverlay.style.display = 'flex';
-                setTimeout(() => {
-                    celebrationOverlay.style.display = 'none';
-                }, 2000); 
-            }
+            //function showCelebration() {
+            //    celebrationOverlay.style.display = 'flex';
+            //    setTimeout(() => {
+            //        celebrationOverlay.style.display = 'none';
+            //    }, 2000);
+            //}
 
             function showLoser() {
                 loserOverlay.style.display = 'flex';
                 setTimeout(() => {
                     loserOverlay.style.display = 'none';
-                }, 4000); 
+                }, 4000);
             }
 
             const textboxChat = document.getElementById("textbox");
-
 
             function changeText(text) {
 
@@ -542,29 +716,29 @@
                 typeWriter(text);
             }
 
-            document.querySelectorAll('.answer-box').forEach(box => {
-                box.addEventListener('mouseenter', () => {
-                    hoverSound.currentTime = 0;
-                    hoverSound.play();
-                });
-                box.addEventListener('click', () => {
-                    if (box.dataset.answer === "1") {
-                        answer1Sound.currentTime = 0;
-                        answer1Sound.play();
-                        changeAvatarToYes();
-                        showCelebration(); 
-                        //changeText("You did it !");
-                    } else {
-                        answer234Sound.currentTime = 0;
-                        answer234Sound.play();
-                        changeAvatarToOops();
-                        //showLoser(); 
-                        //changeText("Weren't you watching the video ? ");
-                    }
-                });
-            });
+            //document.querySelectorAll('.answer-box').forEach(box => {
+            //    box.addEventListener('mouseenter', () => {
+            //        hoverSound.currentTime = 0;
+            //        hoverSound.play();
+            //    });
+            //    box.addEventListener('click', () => {
+            //        if (box.dataset.answer === "1") {
+            //            answer1Sound.currentTime = 0;
+            //            answer1Sound.play();
+            //            changeAvatarToYes();
+            //            showCelebration();
+            //            //changeText("You did it !");
+            //        } else {
+            //            answer234Sound.currentTime = 0;
+            //            answer234Sound.play();
+            //            changeAvatarToOops();
+
+            //        }
+            //    });
+            //});
         });
 
+        // Utility Functions
         function setTypeSoundVolume(volume) {
             document.getElementById("typeSound").volume = volume;
         }
@@ -587,7 +761,7 @@
 
         function playBackgroundMusic() {
             const backgroundMusic = document.getElementById("backgroundMusic");
-            backgroundMusic.volume = 0.1; 
+            backgroundMusic.volume = 0.2;
             backgroundMusic.play();
         }
 
@@ -601,14 +775,160 @@
             backgroundMusic.volume = volume;
         }
 
-
-        setTypeSoundVolume(0.2); 
-        setFullStopSoundVolume(0.3); 
-        setHoverSoundVolume(0.2); 
-        setAnswer1SoundVolume(0.7); 
-        setAnswer234SoundVolume(0.4); 
+        //Mixing
+        setTypeSoundVolume(0.2);
+        setFullStopSoundVolume(0.3);
+        setHoverSoundVolume(0.2);
+        setAnswer1SoundVolume(0.7);
+        setAnswer234SoundVolume(0.4);
 
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var video = document.querySelector('.background-video');
+            var videoContainer = document.getElementById('videoContainer');
+            var quizDiv = document.getElementById('quizDiv');
+
+            video.addEventListener('ended', function () {
+                videoContainer.style.display = 'none'; // Hide the video container
+                quizDiv.style.display = 'block'; // Show the quiz div
+            });
+        });
+
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    var video = document.querySelector('.background-video');
+        //    var playbackSpeedSelector = document.getElementById('playbackSpeed');
+
+        //    playbackSpeedSelector.addEventListener('change', function () {
+        //        video.playbackRate = this.value;
+        //    });
+        //});
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var video = document.querySelector('.background-video');
+            var mapCircles = document.querySelectorAll('.map-item .map-circle');
+
+            video.addEventListener('play', function () {
+                mapCircles[0].classList.add('current-node');
+            });
+
+            video.addEventListener('ended', function () {
+                overlay.style.display = 'none';
+
+                mapCircles[0].classList.remove('current-node');
+
+                mapCircles[1].classList.add('current-node');
+
+                var videoContainer = document.getElementById('videoContainer');
+                var quizDiv = document.getElementById('quizDiv');
+                videoContainer.style.display = 'none';
+                quizDiv.style.display = 'block';
+                fetchQuestions();
+                //var text = "How has Sagicor Life Insurance impacted Marlons family during his fathers passing?";
+                //typeWriter(text, () => {
+                //    const topCenterTextbox = document.getElementById('topCenterTextbox');
+                //    topCenterTextbox.textContent = text;
+                //    topCenterTextbox.style.visibility = 'visible';
+                //});
+                playBackgroundMusic();
+            });
+        });
+    </script>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let questions = [];
+
+        // Function to fetch questions from the JSON file
+        function fetchQuestions() {
+            fetch('json/questions.json') 
+                .then(response => response.json())
+                .then(data => {
+                    questions = data;
+                    renderQuestion();
+                })
+                .catch(error => console.error('Error fetching questions:', error));
+        }
+
+
+        // Function to render the current question and answers
+        function renderQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const questionData = questions[currentQuestionIndex];
+                const questionContainer = document.querySelector('.question-container');
+                const answersContainer = document.querySelector('.answers-container');
+
+
+                var text = questionData.question;
+                typeWriter(text, () => {
+                    const topCenterTextbox = document.getElementById('topCenterTextbox');
+                    topCenterTextbox.textContent = text;
+                    topCenterTextbox.style.visibility = 'visible';
+                });
+
+
+                //typeWriter(questionData.question);
+                answersContainer.innerHTML = '';
+
+                questionData.answers.forEach((answer, index) => {
+                    const answerDiv = document.createElement('div');
+                    answerDiv.classList.add('answer-box');
+                    answerDiv.setAttribute('data-answer', index + 1);
+                    answerDiv.textContent = answer.text;
+                    answerDiv.dataset.correct = answer.correct.toString();
+
+                    answerDiv.addEventListener('click', () => {
+                        if (answer.correct) {
+                            answer1Sound.currentTime = 0;
+                            answer1Sound.play();
+                            changeAvatarToYes();
+                            showCelebration();
+                            currentQuestionIndex++;
+                            renderQuestion();
+                        } else {
+                            console.log('Incorrect answer. Try again.');
+                            answer234Sound.currentTime = 0;
+                            answer234Sound.play();
+                            changeAvatarToOops();
+                        }
+                    });
+
+                    answersContainer.appendChild(answerDiv);
+                });
+            } else {
+                console.log('No more questions.');
+                // Here you can handle the end of the quiz
+            }
+
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.addEventListener('mouseenter', () => {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+                });
+                //box.addEventListener('click', () => {
+                //    // Corrected the comparison to a string 'true'
+                //    if (box.dataset.correct === 'true') {
+                //        answer1Sound.currentTime = 0;
+                //        //answer1Sound.play();
+                //        //changeAvatarToYes();
+                //        //showCelebration();
+                //    } else {
+                //        answer234Sound.currentTime = 0;
+                //        answer234Sound.play();
+                //        changeAvatarToOops();
+                //    }
+                //});
+            });
+
+        }
+
+        // Call fetchQuestions to start the quiz
+        //fetchQuestions();
+
+    </script>
+
 </body>
+
 </html>
 
