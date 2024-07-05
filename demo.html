@@ -45,8 +45,8 @@
 
         
         .avatar {
-        width: 310px;
-        height: 310px;
+        width: 340px;
+        height: 340px;
         border-radius: 50%;
         background-color: #ffffff;
         background-position: center;
@@ -64,7 +64,7 @@
             width: 250px;
             height: 150px;
             font-size: 18px;
-            margin-top: -250px;
+            margin-top: -150px;
             margin-left: -30px;
             z-index: 1;
             position: relative;
@@ -402,12 +402,12 @@
             height: 0;
             border-left: 2vh solid transparent;
             border-right: 2vh solid transparent;
-            border-top: 10vh solid #00A9E0;
+            border-top: 30vh solid #00A9E0;
             position: absolute;
             top: 45%;
             left: -10%;
             transform: rotate(60deg);
-            margin-left: 450px;
+            margin-left: 490px;
             margin-top: -100px;
            /* animation: pulse2 2s infinite;*/
         }
@@ -456,7 +456,7 @@
             </div>
 
             <div class="loser-overlay" id="loserOverlay" style="display: none;">
-                <img src="overlay/sad-peachcat.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
+                <img src="overlay/error.gif" alt="Loser Animation" style="max-width: 100%; max-height: 100%;">
             </div>
 
             <div class="avatar-container">
@@ -516,7 +516,8 @@
     <audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
     <audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
     <audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
-    <audio id="backgroundMusic" src="music/bgm1.mp3" preload="auto" loop></audio>
+    <audio id="backgroundMusic" src="music/bgm6.wav" preload="auto" loop></audio>
+    <audio id="chimes" src="sfx/mus_chime.wav" preload="auto" loop></audio>
 
     <script>
 
@@ -546,32 +547,59 @@
         }
 
         function changeAvatarToYes() {
-            const originalImage = avatar.style.backgroundImage;
-            const textbox = document.getElementById('textbox');
+    const originalImage = avatar.style.backgroundImage;
+    const textbox = document.getElementById('textbox');
 
-            function typeWriter(text, callback) {
-                let i = 0;
-                function typing() {
-                    if (i < text.length) {
-                        textbox.innerHTML += text.charAt(i);
-                        i++;
-                        setTimeout(typing, 50);
-                    } else if (callback) {
-                        setTimeout(callback, 1000);
-                    }
+    function typeWriter(text) {
+        return new Promise((resolve) => {
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    textbox.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, 50);
+                } else {
+                    setTimeout(resolve, 1000);
                 }
-                textbox.innerHTML = "";
-                typing();
             }
+            textbox.innerHTML = "";
+            typing();
+        });
+    }
 
-            avatar.style.backgroundImage = "url('oldman/yes.jpeg')";
-            typeWriter("correct!", () => {
-                setTimeout(() => {
-                    avatar.style.backgroundImage = originalImage;
-                    typeWriter("Next Question");
-                }, 2000);
-            });
+
+    async function removeAnswers() {
+        const answers = document.querySelectorAll('.answer-box');
+        const swipeSound = new Audio('/sfx/coin1.mp3'); // Path to your swipe sound effect
+
+        for (let i = 0; i < answers.length; i++) {
+            // Enhanced swiping animation with opacity
+            answers[i].style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
+            answers[i].style.opacity = '0';
+            answers[i].style.transform = 'translateX(-100vw)';
+
+            // Play the swipe sound effect for each answer
+            swipeSound.cloneNode().play();
+
+            // Wait for the animation to complete before removing the element
+            await new Promise(resolve => setTimeout(() => {
+                answers[i].remove();
+                resolve();
+            }, 500 + i * 100)); // Incremental delay for sequential animation
         }
+    }
+
+    async function changeAndType() {
+        avatar.style.backgroundImage = "url('oldman/yes.jpeg')";
+        await typeWriter("correct!");
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        await removeAnswers(); // Remove answers with animation
+        avatar.style.backgroundImage = originalImage;
+        await typeWriter("Next Question");
+    }
+
+    return changeAndType();
+}
 
         function changeAvatarToOops() {
             const originalImage = avatar.style.backgroundImage;
@@ -601,11 +629,22 @@
         }
 
         function showCelebration() {
-            celebrationOverlay.style.display = 'flex';
-            setTimeout(() => {
-                celebrationOverlay.style.display = 'none';
-            }, 2000);
+            return new Promise((resolve) => {
+                celebrationOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    celebrationOverlay.style.display = 'none';
+                    resolve();
+                }, 2000);
+            });
         }
+
+        function showLoser() {
+                loserOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    loserOverlay.style.display = 'none';
+                }, 4000);
+            }
+
 
         function playSound(sound) {
             return new Promise((resolve) => {
@@ -673,7 +712,7 @@
             const answer1Sound = document.getElementById("answer1Sound");
             const answer234Sound = document.getElementById("answer234Sound");
             const backgroundMusic = document.getElementById("backgroundMusic");
-
+            const chimesSound  = document.getElementById("chimes");
 
 
             // Start Quiz
@@ -700,12 +739,6 @@
             //    }, 2000);
             //}
 
-            function showLoser() {
-                loserOverlay.style.display = 'flex';
-                setTimeout(() => {
-                    loserOverlay.style.display = 'none';
-                }, 4000);
-            }
 
             const textboxChat = document.getElementById("textbox");
 
@@ -755,13 +788,17 @@
             document.getElementById("answer1Sound").volume = volume;
         }
 
+        function setChimeVolume(volume) {
+            document.getElementById("chimes").volume = volume;
+        }
+
         function setAnswer234SoundVolume(volume) {
             document.getElementById("answer234Sound").volume = volume;
         }
 
         function playBackgroundMusic() {
             const backgroundMusic = document.getElementById("backgroundMusic");
-            backgroundMusic.volume = 0.2;
+            backgroundMusic.volume = 0.5;
             backgroundMusic.play();
         }
 
@@ -781,6 +818,7 @@
         setHoverSoundVolume(0.2);
         setAnswer1SoundVolume(0.7);
         setAnswer234SoundVolume(0.4);
+        setChimeVolume(0.6);
 
     </script>
 
@@ -825,12 +863,7 @@
                 videoContainer.style.display = 'none';
                 quizDiv.style.display = 'block';
                 fetchQuestions();
-                //var text = "How has Sagicor Life Insurance impacted Marlons family during his fathers passing?";
-                //typeWriter(text, () => {
-                //    const topCenterTextbox = document.getElementById('topCenterTextbox');
-                //    topCenterTextbox.textContent = text;
-                //    topCenterTextbox.style.visibility = 'visible';
-                //});
+
                 playBackgroundMusic();
             });
         });
@@ -858,7 +891,10 @@
                 const questionData = questions[currentQuestionIndex];
                 const questionContainer = document.querySelector('.question-container');
                 const answersContainer = document.querySelector('.answers-container');
-
+                var textbox = document.getElementById("textbox");
+                textbox.innerHTML = "";
+                // var chimez =  document.getElementById("chimes");
+                // chimez.play();
 
                 var text = questionData.question;
                 typeWriter(text, () => {
@@ -878,21 +914,29 @@
                     answerDiv.textContent = answer.text;
                     answerDiv.dataset.correct = answer.correct.toString();
 
-                    answerDiv.addEventListener('click', () => {
-                        if (answer.correct) {
-                            answer1Sound.currentTime = 0;
-                            answer1Sound.play();
-                            changeAvatarToYes();
+                answerDiv.addEventListener('click', async () => {
+                    if (answer.correct) {
+                        answer1Sound.currentTime = 0;
+                        try {
+                            await answer1Sound.play();
+                          
                             showCelebration();
+                           
+                            await changeAvatarToYes();
+                            // After the celebration is done, then increment and render the next question
                             currentQuestionIndex++;
                             renderQuestion();
-                        } else {
-                            console.log('Incorrect answer. Try again.');
-                            answer234Sound.currentTime = 0;
-                            answer234Sound.play();
-                            changeAvatarToOops();
+                        } catch (error) {
+                            console.error("Error with async operations:", error);
                         }
-                    });
+                    } else {
+                        console.log('Incorrect answer. Try again.');
+                        answer234Sound.currentTime = 0;
+                        answer234Sound.play();
+                        changeAvatarToOops();
+                        showLoser();
+                    }
+                });
 
                     answersContainer.appendChild(answerDiv);
                 });
