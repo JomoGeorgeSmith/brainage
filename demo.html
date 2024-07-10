@@ -460,7 +460,7 @@
             </div>
 
             <div class="avatar-container">
-                <div class="avatar" id="avatar" style="background-image: url('oldman/idle2.png');">
+                <div class="avatar" id="avatar" style="background-image: url('characters/waldo/idle.png');">
 
                 </div>
                 <div class="textbox question-container" id="textbox">
@@ -516,7 +516,7 @@
     <audio id="hoverSound" src="sfx/happy-pop-2-185287.mp3" preload="auto"></audio>
     <audio id="answer1Sound" src="sfx/game-bonus-144751.mp3" preload="auto"></audio>
     <audio id="answer234Sound" src="sfx/cow_bells_01-98236.mp3" preload="auto"></audio>
-    <audio id="backgroundMusic" src="music/bgm6.wav" preload="auto" loop></audio>
+    <audio id="backgroundMusic" src="music/bgm4.mp3" preload="auto" loop></audio>
     <audio id="chimes" src="sfx/mus_chime.wav" preload="auto" loop></audio>
 
     <script>
@@ -570,7 +570,7 @@
 
     async function removeAnswers() {
         const answers = document.querySelectorAll('.answer-box');
-        const swipeSound = new Audio('/sfx/coin1.mp3'); // Path to your swipe sound effect
+        const swipeSound = new Audio('/sfx/D8Bubble.wav'); // Path to your swipe sound effect
 
         for (let i = 0; i < answers.length; i++) {
             // Enhanced swiping animation with opacity
@@ -590,7 +590,7 @@
     }
 
     async function changeAndType() {
-        avatar.style.backgroundImage = "url('oldman/yes.jpeg')";
+        avatar.style.backgroundImage = "url('characters/waldo/yes.gif')";
         await typeWriter("correct!");
         await new Promise(resolve => setTimeout(resolve, 2000));
         await removeAnswers(); // Remove answers with animation
@@ -619,7 +619,7 @@
                 typing();
             }
 
-            avatar.style.backgroundImage = "url('oldman/no.gif')";
+            avatar.style.backgroundImage = "url('characters/waldo/no.gif')";
             typeWriter("thats not right.", () => {
                 setTimeout(() => {
                     avatar.style.backgroundImage = originalImage;
@@ -798,7 +798,7 @@
 
         function playBackgroundMusic() {
             const backgroundMusic = document.getElementById("backgroundMusic");
-            backgroundMusic.volume = 0.5;
+            backgroundMusic.volume = 0.3;
             backgroundMusic.play();
         }
 
@@ -902,9 +902,6 @@
                     topCenterTextbox.textContent = text;
                     topCenterTextbox.style.visibility = 'visible';
                 });
-
-
-                //typeWriter(questionData.question);
                 answersContainer.innerHTML = '';
 
                 questionData.answers.forEach((answer, index) => {
@@ -950,19 +947,7 @@
                     hoverSound.currentTime = 0;
                     hoverSound.play();
                 });
-                //box.addEventListener('click', () => {
-                //    // Corrected the comparison to a string 'true'
-                //    if (box.dataset.correct === 'true') {
-                //        answer1Sound.currentTime = 0;
-                //        //answer1Sound.play();
-                //        //changeAvatarToYes();
-                //        //showCelebration();
-                //    } else {
-                //        answer234Sound.currentTime = 0;
-                //        answer234Sound.play();
-                //        changeAvatarToOops();
-                //    }
-                //});
+
             });
 
         }
@@ -975,4 +960,5 @@
 </body>
 
 </html>
+
 
